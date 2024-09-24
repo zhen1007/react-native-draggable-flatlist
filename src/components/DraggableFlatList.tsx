@@ -261,6 +261,12 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
     [spacerIndexAnim]
   );
 
+  const setDisabled = () => {
+    setTimeout(() => {
+      disabled.value = false;
+    }, 150);
+  };
+
   const gestureDisabled = useSharedValue(false);
 
   const panGesture = Gesture.Pan()
@@ -289,19 +295,20 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
       panGestureState.value = evt.state;
 
       // Only call onDragEnd if actually dragging a cell
-      if (activeIndexAnim.value === -1 || disabled.value) return;
+      // if (activeIndexAnim.value === -1 || disabled.value) return;
       disabled.value = true;
       runOnJS(onRelease)(activeIndexAnim.value);
       const springTo = placeholderOffset.value - activeCellOffset.value;
+      runOnJS(onDragEnd)({
+        from: activeIndexAnim.value,
+        to: spacerIndexAnim.value,
+      });
       touchTranslate.value = withSpring(
         springTo,
         animationConfigRef.current,
         () => {
-          runOnJS(onDragEnd)({
-            from: activeIndexAnim.value,
-            to: spacerIndexAnim.value,
-          });
-          disabled.value = false;
+          // disabled.value = false;
+          runOnJS(setDisabled)();
         }
       );
     })
