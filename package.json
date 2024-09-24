@@ -1,5 +1,5 @@
 {
-  "name": "react-native-draggable-flatlist",
+  "name": "@zhen1007/react-native-draggable-flatlist",
   "version": "4.0.1",
   "description": "A drag-and-drop-enabled FlatList component for React Native",
   "main": "lib/commonjs/index",
@@ -86,5 +86,9 @@
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.17.12"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
   }
 }
